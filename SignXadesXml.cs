@@ -83,7 +83,7 @@ namespace FirmaDigital
             try
             {
                 X509Certificate2 certificado = new X509Certificate2();
-                certificado = FindCertificate(1);
+                certificado = FindCertificate(0);
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.PreserveWhitespace = true;
                 string fullPath = Path.GetFullPath(path);
