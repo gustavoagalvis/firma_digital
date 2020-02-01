@@ -79,8 +79,7 @@ namespace FirmaDigital
             string error = "false";
             try
             {
-                X509Certificate2 certificado = new X509Certificate2();
-                certificado = LoadCertificate(certPath, certPass);
+                X509Certificate2 certificado = new X509Certificate2(certPath);
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.PreserveWhitespace = true;
                 string fullPath = Path.GetFullPath(xmlFileToSign);
@@ -101,13 +100,11 @@ namespace FirmaDigital
             string error = "false";
             try
             {
-                X509Certificate2 certificado = new X509Certificate2();
-                certificado = LoadCertificate(certPath, certPass);
-
+                X509Certificate2 certificado = new X509Certificate2(certPath);
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.PreserveWhitespace = true;
                 string fullPath = Path.GetFullPath(xmlFileToVerify);
-                xmlDoc.Load(@fullPath);
+                xmlDoc.Load(fullPath);
                 bool check = VerifySign(xmlDoc, certificado);
                 if (!check)
                     error = "La firma no fue verificada";
@@ -129,7 +126,7 @@ namespace FirmaDigital
                 throw new ArgumentException("certificate");
            
             SignedXml signedXml = new SignedXml(xmlDoc);
-           // signedXml.Signature.Id = "SignatureId";
+            signedXml.Signature.Id = "SignatureId";
             signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
             signedXml.SignedInfo.SignatureMethod = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
 
