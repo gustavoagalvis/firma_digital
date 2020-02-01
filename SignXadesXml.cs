@@ -56,7 +56,14 @@ namespace FirmaDigital
         public X509Certificate2 LoadCertificate(string certPath, string certPass)
         {
             X509Certificate2Collection collection = new X509Certificate2Collection();
-            collection.Import(certPath, certPass, X509KeyStorageFlags.PersistKeySet);
+            if (String.IsNullOrEmpty(certPass))
+            {
+                collection.Import(certPath);
+            } 
+            else
+            {
+                collection.Import(certPath, certPass, X509KeyStorageFlags.PersistKeySet);
+            }
             foreach (X509Certificate2 cert in collection)
             {
                 Console.WriteLine("Subject is: '{0}'", cert.Subject);
@@ -102,10 +109,10 @@ namespace FirmaDigital
                 string fullPath = Path.GetFullPath(xmlFileToVerify);
                 xmlDoc.Load(@fullPath);
                 bool check = VerifySign(xmlDoc, certificado);
-                if (check)
-                    Console.WriteLine("Verificación exitosa");
-                else
-                    Console.WriteLine("Verificación fallida");
+                if (!check)
+                    error = "La firma no fue verificada";
+                
+                    
             }
             catch (Exception ex)
             {

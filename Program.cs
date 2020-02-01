@@ -13,8 +13,8 @@ namespace FirmaDigital
 
         static void Main(string[] args)
         {
-            //string certPath = @"C:\Users\Administrador\source\repos\Firma_Factura\FirmaDigital\signExample\certificados\8221519_www.example.com.pfx";
             string certPath = @"C:\Users\Administrador\source\repos\Firma_Factura\FirmaDigital\signExample\certificados\CertificadoAudiSoft20200125.pfx";
+            //string certPath = @"C:\Users\Administrador\source\repos\Firma_Factura\FirmaDigital\signExample\certificados\8221519_www.example.com.pfx";
 
             string certPass = "";
             string xmlToSign = @"C:\Users\Administrador\source\repos\Firma_Factura\FirmaDigital\signExample\firmas\firma.xml";
