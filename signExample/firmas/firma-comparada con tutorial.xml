@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item>
+   <name>wrench</name>
+   <Signature xmlns="http://www.w3.org/2000/09/xmldsig#" Id="SignatureId">
+      <SignedInfo>
+         --diferente<CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+         <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+         <Reference Id="R1" URI="" Type="http://uri.etsi.org/01903#SignedProperties">
+            <Transforms>
+               --diferente<Transform Algorithm="http://www.w3.org/TR/1999/REC-xpath-19991116">
+                --que es esto  <XPath>ValorPath</XPath>
+               </Transform>
+               <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=</DigestValue>
+         </Reference>
+         <Reference URI="" Type="http://uri.etsi.org/01903#SignedProperties">
+            --este no esta<Transforms>
+               <Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+            </Transforms>
+            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+            <DigestValue>gJRMoKWLIKXxgPxO9xYRMxxhvYHGHfA6T1g211Y2Fn0=</DigestValue>
+         </Reference>
+      </SignedInfo>
+      <SignatureValue>lFXNixlCFhf2HTnGGqAsWds7bbTjWneVAndwZ31JZdmePh+u6/ZKh6qWwOIPqUqAa5QH5dUYobnJAJD+rgVPU/nexfJ+Z21KNxmscskAk9FUpwKNpTrQWIRczHJBn2oJkqaEXkZu6Xb5Ns8mmabAeKlZAhdYQir4MtBlfA9dOGYyc0dKJVLGEDUBnJOScDJtsrHCaO/HsyFTBPtunujSAv28ujEex9PifUvE5+EUG5D+JuzO6N4Iqvj1vRD/xKEyKDfeiFw81UXx9rfO2Mth0bykDlqKYjjbrCk/tDuhOGXKDbzvmfacaR9YMDaQ6x/+dRPsN9pqiqERDJXf0QtQHg==</SignatureValue>
+      <KeyInfo>
+         <X509Data>
+            <X509Certificate>MIIC7DCCAdSgAwIBAgIQIQDBrX16voJADKgIF0tA0DANBgkqhkiG9w0BAQsFADAUMRIwEAYDVQQDEwlsb2NhbGhvc3QwHhcNMTkxMDA2MDAyNjA0WhcNMjQxMDA1MDAwMDAwWjAUMRIwEAYDVQQDEwlsb2NhbGhvc3QwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDQ0JYT9GBtr/oJ0+T6qX1UHjnb9rmimn4R3yFXU6WYP5R8cpa5Z92RzfWTauqvp6vcPjr8AzRbRlgO7BPVmEtTPzrUt4dXAs3y+G0zp/ROQdX5/47zUo1aWLxqKsikkJdk23sMJM1IdyJ5iobelcPwpHsLNirGokIYy2j5aA5q/dZ0e23VhF1I16EQchQP6VADEuI1nCX78sp4Cs4Y87w7hWO5PJG/IPhTD11/1vIh1L9uVEQvWj9YZd/EeRASSiEJsz6NIv8xKfKNr5zS6NNHJjaj8cn4DeDE0YllyEHJ8uGXwRPFMnaBGp14BFOoY1nLXhMRu7+68jrPELKylphVAgMBAAGjOjA4MAsGA1UdDwQEAwIEsDATBgNVHSUEDDAKBggrBgEFBQcDATAUBgNVHREEDTALgglsb2NhbGhvc3QwDQYJKoZIhvcNAQELBQADggEBAA7pSSEstQpZCZF/7JmzZV6oV2NR/Nl4bObqLO9SZMQW8BRnV1nak0TolzatX3zd0Py3qM8KfYubm7jJF3zElsLbR1VV5Ij3FXsm9YC3JRsqy6liOjCXRGoxSdBSXxGQ7v9bDQdSWZyzD7o3txjGgBwQihZbNb2DDJbhAIccAyNslyAfOGQZfs0YjhqU90yB2NtBMM3ZLHxVu3bFWhJdqAKHRWfEu5HSxbZUxXvLN4YI+R+fft3XV2IR1THBhvZN8PUL94W3KZ3UsKp7SN2WLeHyFkmydpM0xapfq5t/tv3ZWn9Os6DeAbPkf+eqyGUT7hriI8qHH2D8kIBbk/4wlm0=</X509Certificate>
+         </X509Data>
+      </KeyInfo>
+      <Object>
+         <xades:QualifyingProperties xmlns:xades="http://uri.etsi.org/01903/v1.3.2#" xmlns:d4p1="#SignatureId" d4p1:Target="http://uri.etsi.org/01903/v1.3.2#">
+            <xades:SignedProperties xmlns:d5p1="SignedPropertiesId" d5p1:Id="http://uri.etsi.org/01903/v1.3.2#">
+               <xades:SignedSignatureProperties>
+                  <xades:SigningTime>2020-01-29T18:04:43.796Z</xades:SigningTime>
+                  <xades:SigningCertificate>
+                     <xades:Cert>
+                        <xades:CertDigest>
+                           --diferente <ds:DigestMethod xmlns:ds="http://uri.etsi.org/01903/v1.3.2#" Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+                           --si es ? <ds:DigestValue xmlns:ds="http://uri.etsi.org/01903/v1.3.2#">9VB4gc1d13qS1jGmTls5A1bbHVU=</ds:DigestValue>
+                        </xades:CertDigest>
+                        <xades:IssuerSerial>
+                           --si es ?<ds:X509IssuerName xmlns:ds="http://www.w3.org/2000/09/xmldsig#">CN=localhost</ds:X509IssuerName>
+                          --si es ? <ds:X509SerialNumber xmlns:ds="http://www.w3.org/2000/09/xmldsig#">2100C1AD7D7ABE82400CA808174B40D0</ds:X509SerialNumber>
+                        </xades:IssuerSerial>
+                     </xades:Cert>
+                  </xades:SigningCertificate>
+                  <xades:SignaturePolicyIdentifier>
+                     <xades:SignaturePolicyId>
+                        <xades:SigPolicyId>
+                           <xades:Identifier>https://tribunet.hacienda.go.cr/docs/esquemas/2016/v4.1/Resolucion_Comprobantes_Electronicos_DGT-R-48-2016.pdf</xades:Identifier>
+                        </xades:SigPolicyId>
+                        <xades:SigPolicyHash>
+                          --diferente <ds:DigestMethod xmlns:ds="http://uri.etsi.org/01903/v1.3.2#" Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                           --si es ? <ds:DigestValue xmlns:ds="http://uri.etsi.org/01903/v1.3.2#">8UgDUFwzZCkHhEPKeW5ZzKz1hUw=</ds:DigestValue>
+                        </xades:SigPolicyHash>
+                     </xades:SignaturePolicyId>
+                  </xades:SignaturePolicyIdentifier>
+               </xades:SignedSignatureProperties>
+               <xades:SignedDataObjectProperties>
+                  <xades:DataObjectFormat ObjectReference="#r-id-1">
+                     <xades:MimeType>application/octet-stream</xades:MimeType>
+                  </xades:DataObjectFormat>
+               </xades:SignedDataObjectProperties>
+            </xades:SignedProperties>
+         </xades:QualifyingProperties>
+      </Object>
+   </Signature>
+</item>

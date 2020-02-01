@@ -53,21 +53,33 @@ namespace FirmaDigital
             return cert;
         }
 
+        public X509Certificate2 LoadCertificate(string certPath, string certPass)
+        {
+            X509Certificate2Collection collection = new X509Certificate2Collection();
+            collection.Import(certPath, certPass, X509KeyStorageFlags.PersistKeySet);
+            foreach (X509Certificate2 cert in collection)
+            {
+                Console.WriteLine("Subject is: '{0}'", cert.Subject);
+                Console.WriteLine("Issuer is:  '{0}'", cert.Issuer);
 
-        
-        public string SignXadesEpes(string path)
+                return cert;
+            }
+            return null;
+        }
+
+            public string SignXadesEpes(string xmlFileToSign, string certPath, string certPass)
         {
             string error = "false";
             try
             {
                 X509Certificate2 certificado = new X509Certificate2();
-                certificado = FindCertificate(0);
+                certificado = LoadCertificate(certPath, certPass);
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.PreserveWhitespace = true;
-                string fullPath = Path.GetFullPath(path);
+                string fullPath = Path.GetFullPath(xmlFileToSign);
                 xmlDoc.Load(@fullPath);
                 xmlDoc = SignXmlDocument(xmlDoc, certificado);
-                xmlDoc.Save(@path);
+                xmlDoc.Save(xmlFileToSign);
 
             }
             catch (Exception ex) { 
@@ -77,16 +89,17 @@ namespace FirmaDigital
             return error;
         }
 
-        public string VerifySignXadesEpes(string path)
+        public string VerifySignXadesEpes(string xmlFileToVerify, string certPath, string certPass)
         {
             string error = "false";
             try
             {
                 X509Certificate2 certificado = new X509Certificate2();
-                certificado = FindCertificate(0);
+                certificado = LoadCertificate(certPath, certPass);
+
                 XmlDocument xmlDoc = new XmlDocument();
                 xmlDoc.PreserveWhitespace = true;
-                string fullPath = Path.GetFullPath(path);
+                string fullPath = Path.GetFullPath(xmlFileToVerify);
                 xmlDoc.Load(@fullPath);
                 bool check = VerifySign(xmlDoc, certificado);
                 if (check)
@@ -109,7 +122,7 @@ namespace FirmaDigital
                 throw new ArgumentException("certificate");
            
             SignedXml signedXml = new SignedXml(xmlDoc);
-            signedXml.Signature.Id = "SignatureId";
+           // signedXml.Signature.Id = "SignatureId";
             signedXml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
             signedXml.SignedInfo.SignatureMethod = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
 
@@ -171,7 +184,7 @@ namespace FirmaDigital
 
             XmlElement SigPolicyHash = xmlDoc.CreateElement("xades", "SigPolicyHash", URI);
             SignaturePolicyId.AppendChild(SigPolicyHash);
-
+           
             DigestMethod = xmlDoc.CreateElement("ds", "DigestMethod", URI);
             DigestMethod.SetAttribute("Algorithm", "http://www.w3.org/2001/04/xmlenc#sha256");
             DigestValue = xmlDoc.CreateElement("ds", "DigestValue", URI);
@@ -199,7 +212,7 @@ namespace FirmaDigital
             signedXml.SigningKey = certificate.PrivateKey;
 
             KeyInfo keyInfo = new KeyInfo();
-            KeyInfoX509Data keyInfoX509Data = new KeyInfoX509Data(certificate, X509IncludeOption.ExcludeRoot);
+            KeyInfoX509Data keyInfoX509Data = new KeyInfoX509Data(certificate);
             keyInfo.AddClause(keyInfoX509Data);
             signedXml.KeyInfo = keyInfo;
 
@@ -209,16 +222,6 @@ namespace FirmaDigital
             reference2.Type = "http://uri.etsi.org/01903#SignedProperties";
             reference2.Uri = "";
             XmlDsigXPathTransform XPathTransform = CreateXPathTransform("ValorPath", xmlDoc);
-            reference2.AddTransform(XPathTransform);
-            reference2.DigestMethod = "http://www.w3.org/2001/04/xmlenc#sha256";
-            reference2.AddTransform(new XmlDsigExcC14NTransform());
-            signedXml.AddReference(reference2);
-
-            //Reference 2
-            reference2 = new Reference();
-            reference2.Type = "http://uri.etsi.org/01903#SignedProperties";
-            reference2.Uri = "";
-            XPathTransform = CreateXPathTransform("ValorPath", xmlDoc);
             reference2.DigestMethod = "http://www.w3.org/2001/04/xmlenc#sha256";
             reference2.AddTransform(new XmlDsigExcC14NTransform());
             signedXml.AddReference(reference2);
@@ -234,14 +237,6 @@ namespace FirmaDigital
         }
 
 
-        private bool CheckArguments(XmlDocument xmlDoc, X509Certificate2 certificate)
-        {
-
-            if (xmlDoc == null || certificate == null)
-                return false;
-
-            return true;
-        }
 
         private bool VerifySign(XmlDocument xmlDoc, X509Certificate2 certificate)
         {
@@ -250,7 +245,7 @@ namespace FirmaDigital
             if (certificate == null)
                 throw new ArgumentException("certificate");
 
-            xmlDoc.PreserveWhitespace = true;
+            
             SignedXml signedXml = new SignedXml(xmlDoc);
             XmlNodeList nodeList = xmlDoc.GetElementsByTagName("Signature");
             if (nodeList.Count <= 0)
@@ -266,9 +261,25 @@ namespace FirmaDigital
             XmlNodeList certificates = xmlDoc.GetElementsByTagName("X509Certificate");
             string innerTextCert = certificates[0].InnerText;
             X509Certificate2 dcert2 = new X509Certificate2(Convert.FromBase64String(innerTextCert));
-
+            
             signedXml.LoadXml((XmlElement)nodeList[0]);
+            X509Certificate2 serviceCertificate = null;
+            
+            foreach (KeyInfoClause clause in signedXml.KeyInfo)
+            {
+                if (clause is KeyInfoX509Data)
+                {
+                    if (((KeyInfoX509Data)clause).Certificates.Count > 0)
+                    {
+                        serviceCertificate = (X509Certificate2)((KeyInfoX509Data)clause).Certificates[0];
+                    }
+                }
+            }
+            
             bool checkSign = signedXml.CheckSignature(dcert2, true);
+            bool checkSign1 = signedXml.CheckSignature(certificate.PublicKey.Key);
+            bool checkSign2 = signedXml.CheckSignature(serviceCertificate, true);
+            
             return checkSign;
             
         }
